@@ -15,7 +15,7 @@
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
 
-   ```
+   ```  
 
 3. apiClient.ts
 

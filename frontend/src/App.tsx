@@ -1,15 +1,31 @@
-import  { Container, NavbarBrand, Navbar, Nav } from "react-bootstrap";
+import { Container, NavbarBrand, Navbar, Nav, Button } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
+import { Store } from "./Store";
+import { useContext, useEffect } from "react";
 
 function App() {
+  const {
+    state: { mode },
+    dispatch,
+  } = useContext(Store);
+
+  useEffect(() => {
+    document.body.setAttribute("data-bs-theme", mode);
+  }, [mode]);
+
+  const switchModeHandler = (): void => dispatch({ type: "SWITCH_MODE" });
+
   return (
     <div className="d-flex flex-column flex-center h-full">
       <header>
-        <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar>
           <Container>
             <NavbarBrand>Ericogo</NavbarBrand>
           </Container>
           <Nav>
+            <Button variant={mode} onClick={switchModeHandler}>
+              <i className={mode === "light" ? "fa fa-sun" : "fa fa-moon"}></i>
+            </Button>
             <a href="/cart" className="nav-link">
               Cart
             </a>
@@ -20,7 +36,9 @@ function App() {
         </Navbar>
       </header>
       <main>
-       <Outlet />
+        <Container className="mt-5">
+          <Outlet />
+        </Container>
       </main>
       <footer>
         <div className="text-center">All right reserved</div>
